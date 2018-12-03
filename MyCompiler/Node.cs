@@ -48,20 +48,15 @@ namespace MyCompiler
     public class ParameterNode : TerminalNode
     {
         public Type T;
-        public string Name;
 
         public ParameterNode(Type t)
         {
             T = t;
-            //Name = name;
         }
-
 
         public override Expression Execute()
         {
-
-            return Expression.Parameter(T, Name);
-            //throw new NotImplementedException();
+            return Expression.Parameter(T);
         }
     }
 
@@ -71,22 +66,11 @@ namespace MyCompiler
         {
             Left = Right = null;
             priority = 2;
-            
-        }
-
-        public AddNode(Node _left, Node _right)
-        {
-
-            Left = _left;
-            Right = _right;
-            priority = 2;
-
         }
 
         public override Expression Execute()
         {
             return Expression.Add(Left.Execute(), Right.Execute());
-            
         }
 
     }
@@ -96,13 +80,6 @@ namespace MyCompiler
         public SubtractNode()
         {
             Left = Right = null;
-            priority = 2;
-        }
-
-        public SubtractNode(Node _left, Node _right)
-        {
-            Left = _left;
-            Right = _right;
             priority = 2;
         }
 
@@ -120,18 +97,9 @@ namespace MyCompiler
             priority = 1;
         }
 
-        public MultiplyNode(Node _left, Node _right)
-        {
-            priority = 1;
-            Left = _left;
-            Right = _right;
-
-        }
-
         public override Expression Execute()
         {
             return Expression.Multiply(Left.Execute(), Right.Execute());
-
         }
     }
 
@@ -140,14 +108,6 @@ namespace MyCompiler
       public DivideNode()
         {
             Left = Right = null;
-            priority = 1;
-        }
-
-        public DivideNode(Node _left, Node _right)
-        {
-
-            Left = _left;
-            Right = _right;
             priority = 1;
         }
 
@@ -163,14 +123,6 @@ namespace MyCompiler
         public PowerNode()
         {
             Left = Right = null;
-            priority = 0;
-        }
-
-        public PowerNode(Node _base, Node _exp)
-        {
-
-            Left = _base;
-            Right = _exp;
             priority = 0;
         }
 

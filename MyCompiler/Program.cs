@@ -6,8 +6,7 @@ namespace MyCompiler
     class Program
     {
         static void Main(string[] args)
-        {
-                
+        {   
             string formula = "23.34 + 34.4 * 5 ^ 2";
             Console.WriteLine(formula);
 
