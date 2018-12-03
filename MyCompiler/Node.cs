@@ -48,15 +48,17 @@ namespace MyCompiler
     public class ParameterNode : TerminalNode
     {
         public Type T;
+        public string Name;
 
-        public ParameterNode(Type t)
+        public ParameterNode(Type t, string name)
         {
             T = t;
+            Name = name;
         }
 
         public override Expression Execute()
         {
-            return Expression.Parameter(T);
+            return Expression.Parameter(T, Name);
         }
     }
 

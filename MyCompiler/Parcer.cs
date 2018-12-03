@@ -120,7 +120,7 @@ namespace MyCompiler
             Match Param = Regex.Match(s, @"[a-zA-Z]+");
             if (Param.Success)
             {
-                return new ParameterNode( typeof(double));
+                return new ParameterNode( typeof(double), Param.Value);
             }
 
             Match M = Regex.Match(s, @"\d+(.\d*)?");
