@@ -50,10 +50,10 @@ namespace MyCompiler
         public Type T;
         public string Name;
 
-        public ParameterNode(Type t, string name)
+        public ParameterNode(Type t)
         {
             T = t;
-            Name = name;
+            //Name = name;
         }
 
 
@@ -61,7 +61,7 @@ namespace MyCompiler
         {
 
             return Expression.Parameter(T, Name);
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
         }
     }
 

@@ -7,7 +7,7 @@ namespace MyCompiler
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+                
             string formula = "23.34 + 34.4 * 5 ^ 2";
             Console.WriteLine(formula);
 

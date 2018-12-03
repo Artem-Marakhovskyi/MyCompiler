@@ -9,13 +9,18 @@ namespace MyCompiler
     class LambdaBuilder
     {
 
-        public static Func<double> BuildFrom(string _formula)
+        public static Func<double> BuildFrom (string _formula)
         {
             Parcer p = new Parcer();
+            
             Expression e = p.Parce(_formula).Execute();
 
+           
 
-            var res = Expression.Lambda<Func<double>>(e).Compile();
+            //ParameterExpression param = Expression.Parameter(typeof(double));
+
+            /// !!!!! 
+            var res = Expression.Lambda<Func<double>>(e /*parameter */).Compile();
             return res;
         }
     }

@@ -13,7 +13,7 @@ namespace MyCompiler
     {
         public Node Parce(string input)
         {
-
+           
             Regex r = new Regex(@"^[\d*(.\d*) \s \+ \- \* \/ \^ a-z A-Z]*$", RegexOptions.Compiled);
             if (!r.IsMatch(input))
             {
@@ -27,6 +27,7 @@ namespace MyCompiler
                 Node n = StringToNode(m.Value);
                 if (n != null)
                     tokens.Add(n);
+                
             }
 
             Node rootNode = Merge(tokens);
@@ -141,7 +142,7 @@ namespace MyCompiler
             if (Param.Success)
             {
 
-                return new ParameterNode( typeof(double), Param.Value);
+                return new ParameterNode( typeof(double));
             }
 
 
