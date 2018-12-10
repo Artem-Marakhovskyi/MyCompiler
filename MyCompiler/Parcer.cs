@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.RegularExpressions;
 using System.Globalization;
 
-using System.Linq.Expressions;
 
 
 namespace MyCompiler
@@ -13,11 +11,11 @@ namespace MyCompiler
     {
         public Node Parce(string input)
         {
-
+           
             Regex r = new Regex(@"^[\d*(.\d*) \s \+ \- \* \/ \^ a-z A-Z]*$", RegexOptions.Compiled);
             if (!r.IsMatch(input))
             {
-                Console.WriteLine("Bad input");
+                throw new ArgumentException("Input string contains wrong symbols");
             }
 
             List<Node> tokens = new List<Node>();
@@ -26,7 +24,7 @@ namespace MyCompiler
             {  
                 Node n = StringToNode(m.Value);
                 if (n != null)
-                    tokens.Add(n);
+                    tokens.Add(n);             
             }
 
             Node rootNode = Merge(tokens);
@@ -37,15 +35,12 @@ namespace MyCompiler
         public Node Merge (List<Node> nodes)
         {
             if ((nodes is null) || nodes.Count == 0)
-                Console.WriteLine("Can't merge empty list");
+                throw new ArgumentNullException("Can't merge empty list");
 
           
             for (int priority = 0; priority < 3; priority++)
             {
-                List<Node> temp = new List<Node>();
-
-                
-                
+                List<Node> temp = new List<Node>();           
 
                 for (int i = 0 ; i < nodes.Count; i++)
                 {
@@ -59,15 +54,11 @@ namespace MyCompiler
                         if (sign.GetPriority() != priority)
                         {
                             temp.Add(sign);
-                            
-
                         }
                         else
-                        {
-                            
-                            if (temp.Count == 0)
-                                Console.WriteLine("no left operand");
-
+                        {                          
+                            if ((temp.Count == 0)||(i == nodes.Count-1))
+                                throw new ArgumentException("missing left or right operand");
 
                             else if (IsValidArgument(temp[temp.Count - 1]) && IsValidArgument(nodes[i + 1]))
                             {
@@ -76,20 +67,13 @@ namespace MyCompiler
                                 temp[temp.Count - 1] = sign;
                                 i++;
                             }
-
-
-                            else Console.WriteLine("problem with operands");
+                            else throw new ArgumentException("left or right expression is not valid argument");
                         }
                     }
-                    
                 }
-
                 nodes = temp;
-                
             }
-           
             return nodes[0];
-            
         }
 
         private bool IsValidArgument(Node n)
@@ -111,8 +95,6 @@ namespace MyCompiler
 
         public Node StringToNode(string s)
         {
-            Node n = null;
-
             s.Replace(" ", string.Empty);
 
             Match N = Regex.Match(s, @"(\+|\-|\*|\/|\^)");
@@ -135,15 +117,11 @@ namespace MyCompiler
                 }
             }
 
-
-          
             Match Param = Regex.Match(s, @"[a-zA-Z]+");
             if (Param.Success)
             {
-
                 return new ParameterNode( typeof(double), Param.Value);
             }
-
 
             Match M = Regex.Match(s, @"\d+(.\d*)?");
             if (M.Success)
@@ -151,8 +129,7 @@ namespace MyCompiler
                 return new ValueNode(Double.Parse(M.Value, CultureInfo.GetCultureInfo("en-GB")));
             }
 
-
-            return n;
+            return null;
         }
     }
 }
